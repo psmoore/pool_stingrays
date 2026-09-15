@@ -1,0 +1,231 @@
+<!doctype html>
+<!--
+  UNOFFICIAL PREVIEW. Not a Stingrays Swim Team website.
+  A replica of swimrays.org/practice-schedule with the FIVE PDF buttons — one per pool —
+  replaced by one live Pool Relay calendar whose pool menu offers exactly those five.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Practice Schedule &mdash; Stingrays Swim Team (Pool Relay preview)</title>
+<meta name="description" content="Unofficial preview of the Stingrays practice schedule page with one live Pool Relay calendar in place of five PDF buttons.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --blue:  #0d47a1;
+    --blue-d:#093272;
+    --ink:   #1b2230;
+    --muted: #5b6575;
+    --line:  #dfe4ec;
+    --wash:  #f3f7fc;
+    --dark:  #0b1016;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: #fff; color: var(--ink);
+         font: 16px/1.65 "Source Sans 3", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased }
+  a { color: var(--blue); text-decoration: none }
+  a:hover { text-decoration: underline }
+  img { max-width: 100% }
+
+  .preview-note { background: #14181f; color: #e7edf5; font-size: 13px; line-height: 1.5; padding: 10px 20px; text-align: center }
+  .preview-note b { color: #7fb2ff }
+  .preview-note a { color: #fff; text-decoration: underline }
+
+  header.site { border-bottom: 1px solid var(--line); background: #fff }
+  .bar { max-width: 1240px; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 22px }
+  .bar img { height: 60px; width: auto }
+  nav.site { display: flex; gap: 4px; flex-wrap: wrap; align-items: center }
+  nav.site a, nav.site span { color: var(--ink); font-size: 15px; font-weight: 600; padding: 8px 10px; border-radius: 5px; white-space: nowrap }
+  nav.site a:hover { background: var(--wash); text-decoration: none }
+  nav.site .here { color: var(--blue) }
+  .bar .right { margin-left: auto; display: flex; gap: 8px }
+  .btn-solid { background: var(--blue); color: #fff !important; padding: 9px 16px; border-radius: 5px; font-weight: 600; font-size: 15px }
+  .btn-ghost { border: 1px solid var(--blue); color: var(--blue) !important; padding: 8px 16px; border-radius: 5px; font-weight: 600; font-size: 15px }
+  @media (max-width: 1000px) { .bar { flex-wrap: wrap; gap: 10px; padding: 10px 16px } .bar .right { margin-left: 0 } }
+
+  main { max-width: 1240px; margin: 0 auto; padding: 38px 24px 10px }
+  @media (max-width: 640px) { main { padding: 24px 16px 6px } }
+  h1 { font-family: Oswald, Helvetica, Arial, sans-serif; font-weight: 600; color: var(--blue);
+       font-size: clamp(30px, 5vw, 44px); text-align: center; margin: 0 0 6px; letter-spacing: .01em }
+  .lede { text-align: center; color: var(--muted); max-width: 70ch; margin: 0 auto 26px; font-size: 17px }
+
+  .frame { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 10px 30px rgba(13,71,161,.13) }
+  .frame iframe { display: block; width: 100%; height: 780px; border: 0 }
+  @media (max-width: 760px) { .frame iframe { height: 600px } }
+  .cal-foot { font-size: 14.5px; color: var(--muted); margin: 10px 0 0; text-align: center }
+
+  section { margin: 42px 0 0 }
+  h2 { font-family: Oswald, Helvetica, Arial, sans-serif; font-weight: 600; color: var(--blue); font-size: 26px; margin: 0 0 8px }
+  .sub { color: var(--muted); margin: 0 0 18px; max-width: 74ch }
+
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 16px }
+  @media (max-width: 760px) { .before-after { grid-template-columns: 1fr } }
+  .ba { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px }
+  .ba h4 { margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--muted) }
+  .ba p { margin: 8px 0 0; font-size: 15px; color: var(--muted) }
+  .ba.after { border-color: var(--blue); background: var(--wash) }
+  .pdfbtns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px }
+  .pdfbtn { background: var(--blue); color: #fff; padding: 9px 15px; border-radius: 5px; font-size: 14.5px; font-weight: 600; opacity: .55 }
+  .menu { display: inline-block; border: 1px solid var(--blue); border-radius: 5px; padding: 8px 14px; font-size: 14.5px; font-weight: 600; color: var(--blue); background: #fff; margin-top: 10px }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 14px }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px }
+  .card h4 { margin: 0 0 4px; font-size: 16px; color: var(--blue) }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px }
+  .card .groups { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px }
+  .card .groups span { font-size: 11.5px; font-weight: 700; color: #fff; padding: 2px 8px; border-radius: 999px }
+
+  .note { background: var(--wash); border-left: 4px solid var(--blue); border-radius: 0 8px 8px 0; padding: 15px 19px; font-size: 15px; margin-top: 18px }
+  .note b { color: var(--blue-d) }
+
+  footer.site { background: var(--dark); color: #9fb0c4; margin-top: 44px; padding: 30px 24px 22px; font-size: 14.5px; text-align: center }
+  footer.site a { color: #c7d6e6 }
+  footer.site .fine { max-width: 900px; margin: 16px auto 0; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.12); font-size: 12.5px; color: #7f8fa3 }
+</style>
+</head>
+<body>
+
+<div class="preview-note">
+  <b>Unofficial preview.</b> Not a Stingrays Swim Team page &mdash; a mock-up of
+  <a href="https://www.swimrays.org/practice-schedule" target="_blank" rel="noopener noreferrer">swimrays.org/practice-schedule</a>
+  with the five PDF buttons replaced by one live calendar. Built by
+  <a href="https://www.poolrelay.com" target="_blank" rel="noopener noreferrer">Pool Relay</a>.
+</div>
+
+<header class="site">
+  <div class="bar">
+    <img src="https://cdn.filestackcontent.com/slalhVkTgaYkEoM0ttSz" alt="Stingrays Swim Team">
+    <nav class="site">
+      <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">About</a>
+      <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Meets</a>
+      <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Records</a>
+      <span class="here">Calendars/Schedules</span>
+      <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Resources</a>
+      <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">News</a>
+      <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Safe Sport</a>
+    </nav>
+    <div class="right">
+      <a class="btn-solid" href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+      <a class="btn-ghost" href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Login</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h1>Practice Schedules</h1>
+  <p class="lede">All five pools on one calendar. Use the <strong>Facilities</strong> menu to pick a
+    pool &mdash; or leave it on <strong>All</strong> to see the whole team at once.</p>
+
+  <div class="frame">
+    <iframe src="https://www.poolrelay.com/embed/lEDWU7MV8K3zxoAJxUrAmF"
+            title="Stingrays Swim Team practice schedule"></iframe>
+  </div>
+  <p class="cal-foot">Filter to your swimmer&rsquo;s group with the chips under the calendar. It
+    opens as a <strong>list</strong> &mdash; five pools in one week grid is denser than anyone needs
+    &mdash; and <strong>Week</strong>, <strong>Day</strong> and <strong>Month</strong> are a tap
+    away. Where a group name repeats across sites, the chip says which site:
+    <em>King George Manta Blue</em>, <em>Massad Manta Blue</em>.</p>
+
+  <section>
+    <h2>What changed</h2>
+    <div class="before-after">
+      <div class="ba">
+        <h4>Before</h4>
+        <p>Five buttons, five PDFs. To answer &ldquo;where is Silver on Thursday?&rdquo; you opened
+          the right one, found the right block, and hoped it was the current version. Nothing on the
+          page said when any of them was last changed.</p>
+        <div class="pdfbtns">
+          <span class="pdfbtn">JRSSC</span>
+          <span class="pdfbtn">Massad YMCA</span>
+          <span class="pdfbtn">Ron Rosner YMCA</span>
+          <span class="pdfbtn">King George YMCA</span>
+          <span class="pdfbtn">Caroline YMCA</span>
+        </div>
+      </div>
+      <div class="ba after">
+        <h4>After</h4>
+        <p>One calendar. The pool menu offers exactly these five &mdash; not every pool in the
+          system &mdash; and <strong>All</strong> shows the team across all of them at once, which no
+          PDF could do.</p>
+        <span class="menu">Facilities: All &#9662;</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The five pools</h2>
+    <p class="sub">The same groups train at different sites on different nights. The calendar knows
+      which lanes, at which pool, on which evening.</p>
+    <div class="cards">
+      <div class="card">
+        <h4>JRSSC</h4>
+        <p>Jeff Rouse Swim &amp; Sport Center</p>
+        <div class="groups">
+          <span style="background:#D4A017">Gold 1</span><span style="background:#E8B93A">Gold 2</span>
+          <span style="background:#B8860B">Gold 3</span><span style="background:#8FA6BC">Silver</span>
+          <span style="background:#B87333">Bronze</span><span style="background:#2E6FD6">Manta</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>Massad YMCA</h4>
+        <p>Massad Family YMCA</p>
+        <div class="groups">
+          <span style="background:#8FA6BC">Silver</span><span style="background:#B87333">Bronze</span>
+          <span style="background:#2E6FD6">Manta</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>Ron Rosner YMCA</h4>
+        <p>Ron Rosner Family YMCA</p>
+        <div class="groups">
+          <span style="background:#D4A017">Gold</span><span style="background:#B8860B">Gold 3</span>
+          <span style="background:#8FA6BC">Silver</span><span style="background:#B87333">Bronze</span>
+          <span style="background:#2E6FD6">Manta</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>King George YMCA</h4>
+        <p>King George Family YMCA</p>
+        <div class="groups">
+          <span style="background:#D4A017">Gold</span><span style="background:#B8860B">Gold 3</span>
+          <span style="background:#8FA6BC">Silver</span><span style="background:#B87333">Bronze</span>
+          <span style="background:#2E6FD6">Manta</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>Caroline YMCA</h4>
+        <p>Caroline Family YMCA</p>
+        <div class="groups">
+          <span style="background:#B8860B">Gold 3</span><span style="background:#2E6FD6">Manta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>Why the menu has five entries and not thirty-five.</b> The calendar is scoped to these
+      pools, so the control only offers what the page can actually show. Picking a pool that holds
+      nothing for this team was never a useful choice.
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <p style="margin:0">
+    <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://www.swimrays.org/" target="_blank" rel="noopener noreferrer">Member Login</a>
+  </p>
+  <p style="margin:10px 0 0">&copy; 2026 Stingrays Swim Team</p>
+  <p class="fine">This page is an unofficial preview built to demonstrate an embedded
+    <a href="https://www.poolrelay.com" target="_blank" rel="noopener noreferrer">Pool Relay</a>
+    calendar. It is not operated by or affiliated with the Stingrays Swim Team, the Jeff Rouse Swim
+    &amp; Sport Center, or the YMCA. For official practice schedules see
+    <a href="https://www.swimrays.org/practice-schedule" target="_blank" rel="noopener noreferrer">swimrays.org</a>.</p>
+</footer>
+
+</body>
+</html>
